@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+from random import randint
+
+def mergesort(list_to_sort):
+    list_len = len(list_to_sort)
+    if list_len <= 1:
+        return list_to_sort
+    half_len = int(list_len/2)
+    left = mergesort(list_to_sort[:half_len])
+    right = mergesort(list_to_sort[half_len:])
+    return merge(left, right)
+
+def merge(left_list, right_list):
+    list_position = 0
+    result_list = []
+    
+    while len(left_list) or len(right_list):
+        if len(left_list) > 0:
+            if len(right_list) == 0:
+                result_list.insert(list_position, left_list.pop(0))
+            elif left_list[0] > right_list[0]:
+                result_list.insert(list_position, right_list.pop(0))
+            elif left_list[0] < right_list[0]:
+                result_list.insert(list_position, left_list.pop(0))
+        else:
+            result_list.insert(list_position, right_list.pop(0))
+        list_position = list_position + 1
+    return result_list
+
+list_to_sort = []
+list_length = 9000
+
+for i in range(0, list_length):
+    list_to_sort.append(randint(0, 100000000))
+
+sorted_list = mergesort(list_to_sort)

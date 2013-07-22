@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+from random import randint
+
+def quicksort(list_to_sort):
+    if len(list_to_sort) <= 1:
+        return list_to_sort
+    
+    results = []
+    less_than_pivot_list = []
+    greater_than_pivot_list = []
+    pivot = randint(0, len(list_to_sort) - 1)
+    pivot_value = list_to_sort.pop(pivot)
+    
+    for item in list_to_sort:
+        if item <= pivot_value:
+            less_than_pivot_list.append(item)
+        else:
+            greater_than_pivot_list.append(item)
+    
+    results.extend(quicksort(less_than_pivot_list))
+    results.append(pivot_value)
+    results.extend(quicksort(greater_than_pivot_list))
+    return results
+
+list_to_sort = []
+list_length = 9000
+for i in range(0, list_length):
+    list_to_sort.append(randint(0, 100000))
+sorted_list = quicksort(list_to_sort)
